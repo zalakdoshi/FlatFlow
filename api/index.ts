@@ -1,5 +1,11 @@
-import { createApp } from "../apps/api/src/app.js";
 
-const app = createApp();
+let app: any;
 
-export default app;
+export default async function handler(req: any, res: any) {
+  if (!app) {
+    const { createApp } = await import("../apps/api/src/app.js");
+    app = createApp();
+  }
+
+  return app(req, res);
+}
